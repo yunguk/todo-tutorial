@@ -48,3 +48,6 @@ Cat Facts API: https://alexwohlbruck.github.io/cat-facts/
 - 목록 화면: 고양이 상식 여러 건을 리스트로 표시 (요약/첫 줄만 노출 가능)
 - 항목 클릭 시: 선택한 항목의 전체 설명(fact 전문)을 보여주는 상세 화면 또는 확장 영역 표시
 - Server Components 우선, 상세 내용 표시를 위한 클라이언트 상태는 최소화 (예: 선택된 항목 id만 클라이언트 상태로 관리)
+
+## 배포 상태
+완료 및 배포됨 (`/cat-facts`). 구현 상세와 완료 기준은 이 기능 개발 중 `docs/specs/cat-facts/spec.md`에 정리했으며, 배포 완료로 해당 스펙 폴더는 정리(삭제)했다.
