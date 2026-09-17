@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { QuizQuestion } from "@/lib/cat-quiz";
+import { getRandomCatImageUrl } from "@/lib/random-cat";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,20 @@ export function QuizPlayer({ questions }: QuizPlayerProps) {
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [answer, setAnswer] = useState<boolean | null>(null);
+  const [catImageUrl, setCatImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (index >= questions.length) return;
+
+    let cancelled = false;
+    getRandomCatImageUrl().then((url) => {
+      if (!cancelled) setCatImageUrl(url);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [index, questions.length]);
 
   if (questions.length === 0) {
     return (
@@ -46,11 +61,23 @@ export function QuizPlayer({ questions }: QuizPlayerProps) {
     setIndex((i) => i + 1);
   }
 
+  function retry() {
+    setAnswer(null);
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <p className="text-xs text-muted-foreground">
         {index + 1} / {questions.length}
       </p>
+
+      {catImageUrl && (
+        <img
+          src={catImageUrl}
+          alt="랜덤 고양이 사진"
+          className="h-40 w-full rounded-md object-cover"
+        />
+      )}
 
       <p className="rounded-md border border-border p-4 text-sm">
         {question.statementKo}
@@ -92,9 +119,21 @@ export function QuizPlayer({ questions }: QuizPlayerProps) {
       )}
 
       {answer !== null && (
-        <Button type="button" onClick={next}>
-          {isLast ? "결과 보기" : "다음 문제"}
-        </Button>
+        <div className="flex gap-2">
+          {answer !== question.isTrue && (
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1"
+              onClick={retry}
+            >
+              다시 풀기
+            </Button>
+          )}
+          <Button type="button" className="flex-1" onClick={next}>
+            {isLast ? "결과 보기" : "다음 문제"}
+          </Button>
+        </div>
       )}
     </div>
   );
