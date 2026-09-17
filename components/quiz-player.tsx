@@ -75,18 +75,31 @@ export function QuizPlayer({ questions }: QuizPlayerProps) {
     setAnswer(null);
   }
 
+  const progress = ((index + 1) / questions.length) * 100;
+
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-xs text-muted-foreground">
-        {index + 1} / {questions.length}
-      </p>
+      <div className="flex flex-col gap-1.5">
+        <p className="text-xs text-muted-foreground">
+          {index + 1} / {questions.length}
+        </p>
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+          <div
+            className="h-full rounded-full bg-primary transition-all duration-300"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
 
-      {catImageUrl && (
+      {catImageUrl ? (
         <img
+          key={catImageUrl}
           src={catImageUrl}
           alt="랜덤 고양이 사진"
-          className="h-40 w-full rounded-md object-cover"
+          className="h-40 w-full animate-in rounded-md object-cover fade-in duration-300"
         />
+      ) : (
+        <div className="h-40 w-full animate-pulse rounded-md bg-muted" />
       )}
 
       <p className="rounded-md border border-border p-4 text-sm">
@@ -117,7 +130,7 @@ export function QuizPlayer({ questions }: QuizPlayerProps) {
       {answer !== null && (
         <p
           className={cn(
-            "rounded-md border p-3 text-sm",
+            "animate-in rounded-md border p-3 text-sm fade-in zoom-in-95 duration-200",
             answer === question.isTrue
               ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
               : "border-destructive/30 bg-destructive/10 text-destructive"
