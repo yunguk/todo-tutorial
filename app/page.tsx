@@ -19,12 +19,20 @@ export default function Page() {
           </p>
         </div>
         <TodoList />
-        <Link
-          href="/cat-facts"
-          className="text-center text-sm text-muted-foreground underline underline-offset-4"
-        >
-          🐱 고양이 상식 보러가기
-        </Link>
+        <div className="flex justify-center gap-4">
+          <Link
+            href="/cat-facts"
+            className="text-center text-sm text-muted-foreground underline underline-offset-4"
+          >
+            🐱 고양이 상식 보러가기
+          </Link>
+          <Link
+            href="/cat-quiz"
+            className="text-center text-sm text-muted-foreground underline underline-offset-4"
+          >
+            🐱 O/X 퀴즈 풀어보기
+          </Link>
+        </div>
       </div>
     </div>
   )
