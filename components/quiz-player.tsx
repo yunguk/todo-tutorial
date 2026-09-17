@@ -39,10 +39,20 @@ export function QuizPlayer({ questions }: QuizPlayerProps) {
 
   if (index >= questions.length) {
     return (
-      <div className="flex flex-col items-center gap-2 py-6 text-center">
+      <div className="flex flex-col items-center gap-4 py-6 text-center">
         <p className="text-lg font-semibold">
           {score} / {questions.length} 정답!
         </p>
+        <Button
+          type="button"
+          onClick={() => {
+            setScore(0);
+            setAnswer(null);
+            setIndex(0);
+          }}
+        >
+          게임을 다시 할까요?
+        </Button>
       </div>
     );
   }

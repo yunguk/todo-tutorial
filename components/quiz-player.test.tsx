@@ -91,6 +91,25 @@ describe("QuizPlayer", () => {
     expect(screen.getByText("2 / 2 정답!")).toBeInTheDocument();
   });
 
+  it("최종 점수 화면에서 '게임을 다시 할까요?'를 누르면 처음부터 다시 시작한다", async () => {
+    const user = userEvent.setup();
+    render(<QuizPlayer questions={questions} />);
+
+    await user.click(screen.getByRole("button", { name: "X (거짓)" }));
+    await user.click(screen.getByRole("button", { name: "다음 문제" }));
+    await user.click(screen.getByRole("button", { name: "O (참)" }));
+    await user.click(screen.getByRole("button", { name: "결과 보기" }));
+
+    expect(screen.getByText("2 / 2 정답!")).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("button", { name: "게임을 다시 할까요?" })
+    );
+
+    expect(screen.getByText("1 / 2")).toBeInTheDocument();
+    expect(screen.getByText("고양이는 물을 아주 좋아한다.")).toBeInTheDocument();
+  });
+
   it("문제 위에 랜덤 고양이 사진이 표시된다", async () => {
     render(<QuizPlayer questions={questions} />);
 
