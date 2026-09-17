@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getCatFacts } from "@/lib/cat-facts";
 import { CatFactList } from "@/components/cat-fact-list";
 
@@ -14,6 +15,20 @@ export default async function CatFactsPage() {
           </p>
         </div>
         <CatFactList facts={facts} />
+        <div className="flex justify-center gap-4">
+          <Link
+            href="/"
+            className="text-center text-sm text-muted-foreground underline underline-offset-4"
+          >
+            🐱 O/X 퀴즈 풀어보기
+          </Link>
+          <Link
+            href="/todo"
+            className="text-center text-sm text-muted-foreground underline underline-offset-4"
+          >
+            ✅ 할 일 관리 보러가기
+          </Link>
+        </div>
       </div>
     </div>
   );
